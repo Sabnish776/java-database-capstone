@@ -39,20 +39,16 @@ public class Patient {
     @Size(max = 255)
     private String address ;
 
-    @NotNull(message = "Gender cannot be null")
-    private String gender ;
-
     public Patient() {
     }
 
-    public Patient(Long id, String name, String email, String password, String phone, String address, String gender) {
+    public Patient(Long id, String name, String email, String password, String phone, String address) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.phone = phone;
         this.address = address;
-        this.gender = gender;
     }
 
     public Long getId() {
@@ -101,14 +97,6 @@ public class Patient {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
 }
