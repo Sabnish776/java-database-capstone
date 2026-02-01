@@ -1,5 +1,5 @@
 <!-- index.html -->
-<!-- 
+<!--
 
 Step-by-Step Explanation of `index.html`.
 This file allows users to select a role (Admin, Patient, Doctor) 
@@ -102,3 +102,77 @@ and triggers modal-based login functionality.
     * Properly close all opened tags to complete the document structure.
 
  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Character encoding -->
+    <meta charset="UTF-8">
+
+    <!-- Page title -->
+    <title>Select Your Role</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="./assets/images/logo/logo.png">
+
+    <!-- Page-specific CSS -->
+    <link rel="stylesheet" href="./assets/css/index.css">
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+    <!-- Utility scripts -->
+    <script src="./js/util.js" defer></script>
+    <script src="./js/render.js" defer></script>
+
+    <!-- Header & Footer components -->
+    <script src="./js/components/header.js" defer></script>
+    <script src="./js/components/footer.js" defer></script>
+</head>
+
+<body>
+<main>
+    <!-- Container -->
+    <div class="container">
+        <div class="wrapper">
+
+            <!-- Header placeholder -->
+            <div id="header"></div>
+
+            <!-- Main content -->
+            <main class="main-content">
+                <h2>Select Your Role</h2>
+
+                <div class="role-buttons">
+                    <button id="adminRoleBtn" onclick="selectRole('admin')">
+                        Admin
+                    </button>
+
+                    <button id="doctorRoleBtn" onclick="selectRole('doctor')">
+                        Doctor
+                    </button>
+
+                    <button id="patientRoleBtn" onclick="selectRole('patient')">
+                        Patient
+                    </button>
+                </div>
+            </main>
+
+            <!-- Footer placeholder -->
+            <div id="footer"></div>
+
+        </div>
+    </div>
+</main>
+
+<!-- Modal (hidden by default) -->
+<div id="modal" class="modal" style="display: none;">
+    <button id="closeModal">×</button>
+    <div id="modal-body"></div>
+</div>
+
+<!-- Role selection & modal behavior -->
+<script type="module" src="./js/services/index.js" defer></script>
+</body>
+</html>
+
+

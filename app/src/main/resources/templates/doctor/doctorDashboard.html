@@ -99,3 +99,89 @@ This file defines the Doctor Dashboard interface, allowing doctors to view and m
 
     * Properly close the `<body>` and `<html>` tags to complete the document.
  -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Character encoding -->
+    <meta charset="UTF-8">
+
+    <!-- Page title -->
+    <title>Doctor Dashboard</title>
+
+    <!-- Favicon -->
+    <link rel="icon" th:href="@{/assets/images/logo/logo.png}">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" th:href="@{/assets/css/adminDashboard.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/doctorDashboard.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+
+    <!-- Utility scripts -->
+    <script th:src="@{/js/render.js}" defer></script>
+    <script th:src="@{/js/util.js}" defer></script>
+
+    <!-- Components -->
+    <script type="module" th:src="@{/js/components/header.js}" defer></script>
+    <script th:src="@{/js/components/footer.js}" defer></script>
+    <script th:src="@{/js/components/patientRows.js}" defer></script>
+
+    <!-- Services & main logic -->
+    <script type="module" th:src="@{/js/services/patientServices.js}" defer></script>
+    <script type="module" th:src="@{/js/services/doctorDashboard.js}" defer></script>
+</head>
+
+<body>
+<!-- Container -->
+<div class="container">
+    <div class="wrapper">
+
+        <!-- Header placeholder -->
+        <div id="header"></div>
+
+        <!-- Main content -->
+        <main class="main-content">
+
+            <!-- Search bar -->
+            <input
+                    type="text"
+                    id="searchBar"
+                    placeholder="Search patient by name"
+            />
+
+            <!-- Filter section -->
+            <div class="filters">
+                <button id="todayAppointmentsBtn" class="dashboard-btn">
+                    Today’s Appointments
+                </button>
+
+                <input
+                        type="date"
+                        id="appointmentDate"
+                />
+            </div>
+
+            <!-- Patient records table -->
+            <table id="patientTable">
+                <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Prescription</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Rows injected dynamically via patientRows.js -->
+                </tbody>
+            </table>
+
+        </main>
+
+        <!-- Footer placeholder -->
+        <div id="footer"></div>
+
+    </div>
+</div>
+</body>
+</html>

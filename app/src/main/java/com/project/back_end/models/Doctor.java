@@ -23,7 +23,7 @@ public class Doctor {
 
     @NotNull(message = "speciality cannot be null")
     @Size(min=3,max=100)
-    private String speciality ;
+    private String specialty ;
 
     @NotNull(message = "email cannot be null")
     @Email
@@ -61,11 +61,11 @@ public class Doctor {
     }
 
     public String getSpeciality() {
-        return speciality;
+        return specialty;
     }
 
     public void setSpeciality(String speciality) {
-        this.speciality = speciality;
+        this.specialty = speciality;
     }
 
     public String getEmail() {
@@ -104,7 +104,7 @@ public class Doctor {
     public String toString() {
         return "Doctor{" +
                 "name='" + name + '\'' +
-                ", speciality='" + speciality + '\'' +
+                ", specialty='" + specialty + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 '}';

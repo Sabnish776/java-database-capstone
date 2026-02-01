@@ -122,4 +122,147 @@
 
   16. **Render the Header**: Finally, the `renderHeader()` function is called to initialize the header rendering process when the page loads.
 */
-   
+
+// header.js
+
+import {openModal} from "./modals.js";
+
+function renderHeader() {
+    const headerDiv = document.getElementById("header");
+    if (!headerDiv) return;
+
+    // If homepage, clear session and don’t show role-based header
+    if (window.location.pathname.endsWith("/")) {
+        localStorage.removeItem("userRole");
+        localStorage.removeItem("token");
+        headerDiv.innerHTML = "";
+        return;
+    }
+
+    const role = localStorage.getItem("userRole");
+    const token = localStorage.getItem("token");
+
+    // Invalid session handling
+    if (
+        (role === "loggedPatient" || role === "admin" || role === "doctor") &&
+        !token
+    ) {
+        localStorage.removeItem("userRole");
+        alert("Session expired or invalid login. Please log in again.");
+        window.location.href = "/";
+        return;
+    }
+
+    let headerTitle = "";
+    if (role === "admin") {
+        headerTitle = "Admin Dashboard";
+    }
+
+    if (role === "doctor") {
+        headerTitle = "Doctor Dashboard";
+    }
+
+    if (role === "patient") {
+        headerTitle = "Patient Portal";
+    }
+
+    if (role === "loggedPatient") {
+        headerTitle = "Patient Dashboard";
+    }
+
+    let headerContent = `
+    <div class="header">
+      <img class="logo-img" src="/assets/images/logo/logo.png" alt="Logo"  />
+      <h2>Hospital cms</h2>
+<!--      <h2 class="header-title">${headerTitle}</h2>-->
+      <nav>
+    `;
+
+    // Role-based header rendering
+    if (role === "admin") {
+        headerContent += `
+      <button id="addDocBtn" class="adminBtn">Add Doctor</button>
+      <a href="#" id="logoutBtn">Logout</a>
+    `;
+    }
+
+    if (role === "doctor") {
+        headerContent += `
+      <a href="/doctor/dashboard">Home</a>
+      <a href="#" id="logoutBtn">Logout</a>
+    `;
+    }
+
+    if (role === "patient") {
+        headerContent += `
+      <a href="#" id="loginBtn">Login</a>
+      <a href="#" id="signupBtn">Sign Up</a>
+    `;
+    }
+
+    if (role === "loggedPatient") {
+        headerContent += `
+      <a href="/pages/patientDashboard.html">Home</a>
+      <a href="/pages/patientAppointments.html">Appointments</a>
+      <a href="#" id="logoutPatientBtn">Logout</a>
+    `;
+    }
+
+    headerContent += `
+      </nav>
+    </div>
+  `;
+
+    // Inject header
+    headerDiv.innerHTML = headerContent;
+
+    // Attach listeners AFTER injection
+    attachHeaderButtonListeners();
+}
+
+// Attach dynamic button listeners
+function attachHeaderButtonListeners() {
+    const addDocBtn = document.getElementById("addDocBtn");
+    if (addDocBtn) {
+        addDocBtn.addEventListener("click", () => {
+            openModal("addDoctor");
+        });
+    }
+
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", logout);
+    }
+
+    const logoutPatientBtn = document.getElementById("logoutPatientBtn");
+    if (logoutPatientBtn) {
+        logoutPatientBtn.addEventListener("click", logoutPatient);
+    }
+
+    const loginBtn = document.getElementById("loginBtn");
+    if (loginBtn) {
+        loginBtn.addEventListener("click", () => openModal("patientLogin"));
+    }
+
+    const signupBtn = document.getElementById("signupBtn");
+    if (signupBtn) {
+        signupBtn.addEventListener("click", () => openModal("patientSignup"));
+    }
+}
+
+// Logout for admin / doctor
+function logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userRole");
+    window.location.href = "/";
+}
+
+// Logout for patient (keep patient role)
+function logoutPatient() {
+    localStorage.removeItem("token");
+    localStorage.setItem("userRole", "patient");
+    window.location.href = "/pages/patientDashboard.html";
+}
+
+// Render header on page load
+document.addEventListener("DOMContentLoaded", renderHeader);
