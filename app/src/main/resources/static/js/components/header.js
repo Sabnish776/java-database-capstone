@@ -173,8 +173,8 @@ function renderHeader() {
     let headerContent = `
     <div class="header">
       <img class="logo-img" src="/assets/images/logo/logo.png" alt="Logo"  />
-      <h2>Hospital cms</h2>
-<!--      <h2 class="header-title">${headerTitle}</h2>-->
+<!--      <h2>Hospital cms</h2>-->
+      <h2 class="header-title">${headerTitle}</h2>
       <nav>
     `;
 

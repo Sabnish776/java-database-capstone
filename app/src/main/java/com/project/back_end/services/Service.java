@@ -1,6 +1,13 @@
 package com.project.back_end.services;
 
+import java.util.HashMap;
+import java.util.Map;
+
+@org.springframework.stereotype.Service
 public class Service {
+    public Map validateToken(String token, String role) {
+        return new HashMap<String,String>() ;
+    }
 // 1. **@Service Annotation**
 // The @Service annotation marks this class as a service component in Spring. This allows Spring to automatically detect it through component scanning
 // and manage its lifecycle, enabling it to be injected into controllers or other services using @Autowired or constructor injection.
