@@ -70,3 +70,149 @@
 
     If saving fails, show an error message
 */
+// adminDashboard.js – Managing Doctors
+
+import { openModal } from "./components/modals.js";
+import {
+    getDoctors,
+    filterDoctors,
+    saveDoctor
+} from "./services/doctorServices.js";
+import { createDoctorCard } from "./components/doctorCard.js";
+
+/* ===============================
+   Page Load
+================================ */
+document.addEventListener("DOMContentLoaded", () => {
+    // Bind Add Doctor button
+    const addDocBtn = document.getElementById("addDocBtn");
+    if (addDocBtn) {
+        addDocBtn.addEventListener("click", () => {
+            openModal("addDoctor");
+        });
+    }
+
+    // Load doctors
+    loadDoctorCards();
+
+    // Bind filters
+    bindFilters();
+});
+
+/* ===============================
+   Load & Render Doctors
+================================ */
+async function loadDoctorCards() {
+    const contentDiv = document.getElementById("content");
+    contentDiv.innerHTML = "";
+
+    const doctors = await getDoctors();
+
+    if (!doctors || doctors.length === 0) {
+        contentDiv.innerHTML = "<p>No doctors found</p>";
+        return;
+    }
+
+    renderDoctorCards(doctors);
+}
+
+function renderDoctorCards(doctors) {
+    const contentDiv = document.getElementById("content");
+    contentDiv.innerHTML = "";
+
+    doctors.forEach((doctor) => {
+        const card = createDoctorCard(doctor);
+        contentDiv.appendChild(card);
+    });
+}
+
+/* ===============================
+   Search & Filter Logic
+================================ */
+function bindFilters() {
+    const searchBar = document.getElementById("searchBar");
+    const filterTime = document.getElementById("filterTime");
+    const filterSpecialty = document.getElementById("filterSpecialty");
+
+    if (searchBar) {
+        searchBar.addEventListener("input", filterDoctorsOnChange);
+    }
+    if (filterTime) {
+        filterTime.addEventListener("change", filterDoctorsOnChange);
+    }
+    if (filterSpecialty) {
+        filterSpecialty.addEventListener("change", filterDoctorsOnChange);
+    }
+}
+
+async function filterDoctorsOnChange() {
+    const name = document.getElementById("searchBar")?.value || "";
+    const time = document.getElementById("filterTime")?.value || "";
+    const specialty = document.getElementById("filterSpecialty")?.value || "";
+
+    const doctors = await filterDoctors(name, time, specialty);
+
+    const contentDiv = document.getElementById("content");
+    contentDiv.innerHTML = "";
+
+    if (!doctors || doctors.length === 0) {
+        contentDiv.innerHTML = "<p>No doctors found</p>";
+        return;
+    }
+
+    renderDoctorCards(doctors);
+}
+
+/* ===============================
+   Add Doctor (Modal Submit)
+   Called from modals.js
+================================ */
+window.adminAddDoctor = async function () {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        alert("Unauthorized. Please login again.");
+        return;
+    }
+
+    const name = document.getElementById("doctorName").value;
+    const specialty = document.getElementById("specialization").value;
+    const email = document.getElementById("doctorEmail").value;
+    const password = document.getElementById("doctorPassword").value;
+    const phone = document.getElementById("doctorPhone").value;
+
+    const availability = [];
+    document
+        .querySelectorAll("input[name='availability']:checked")
+        .forEach((cb) => availability.push(cb.value));
+
+    const doctor = {
+        name,
+        specialty,
+        email,
+        password,
+        phone,
+        availableTimes: availability
+    };
+
+    try {
+        const result = await saveDoctor(doctor, token);
+
+        if (!result.success) {
+            alert(result.message);
+            return;
+        }
+
+        alert("Doctor added successfully");
+
+        // Close modal
+        document.getElementById("modal").style.display = "none";
+
+        // Reload doctors
+        loadDoctorCards();
+    } catch (error) {
+        console.error(error);
+        alert("Failed to add doctor");
+    }
+};
+

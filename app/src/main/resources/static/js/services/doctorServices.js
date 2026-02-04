@@ -51,3 +51,104 @@
 
    Catch any other errors, alert the user, and return a default empty result
 */
+import { API_BASE_URL } from "../config/config.js";
+
+const DOCTOR_API = API_BASE_URL + "/doctor";
+
+/**
+ * Get all doctors
+ */
+export async function getDoctors() {
+    try {
+        const response = await fetch(DOCTOR_API);
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch doctors");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("getDoctors error:", error);
+        return [];
+    }
+}
+
+/**
+ * Delete a doctor (Admin only)
+ */
+export async function deleteDoctor(id, token) {
+    try {
+        const response = await fetch(`${DOCTOR_API}/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        const data = await response.json();
+
+        return {
+            success: response.ok,
+            message: data.message || "Doctor deleted successfully"
+        };
+    } catch (error) {
+        console.error("deleteDoctor error:", error);
+        return {
+            success: false,
+            message: "Failed to delete doctor"
+        };
+    }
+}
+
+/**
+ * Add a new doctor (Admin only)
+ */
+export async function saveDoctor(doctor, token) {
+    try {
+        const response = await fetch(DOCTOR_API, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(doctor)
+        });
+
+        const data = await response.json();
+
+        return {
+            success: response.ok,
+            message: data.message || "Doctor added successfully"
+        };
+    } catch (error) {
+        console.error("saveDoctor error:", error);
+        return {
+            success: false,
+            message: "Failed to add doctor"
+        };
+    }
+}
+
+/**
+ * Filter doctors by name, time, and specialty
+ */
+export async function filterDoctors(name = "", time = "", specialty = "") {
+    try {
+        const query = new URLSearchParams({
+            name,
+            time,
+            specialty
+        }).toString();
+
+        const response = await fetch(`${DOCTOR_API}/filter?${query}`);
+
+        if (!response.ok) {
+            throw new Error("Failed to filter doctors");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("filterDoctors error:", error);
+        return [];
+    }
+}

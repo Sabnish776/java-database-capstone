@@ -150,13 +150,13 @@ This file defines the Doctor Dashboard interface, allowing doctors to view and m
 
             <!-- Filter section -->
             <div class="filters">
-                <button id="todayAppointmentsBtn" class="dashboard-btn">
+                <button id="todayButton" class="dashboard-btn">
                     Today’s Appointments
                 </button>
 
                 <input
                         type="date"
-                        id="appointmentDate"
+                        id="datePicker"
                 />
             </div>
 
@@ -171,7 +171,7 @@ This file defines the Doctor Dashboard interface, allowing doctors to view and m
                     <th>Prescription</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="patientTableBody">
                 <!-- Rows injected dynamically via patientRows.js -->
                 </tbody>
             </table>
