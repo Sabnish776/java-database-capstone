@@ -178,6 +178,8 @@ tbody tr:hover {
     border-radius: 5px;
     cursor: pointer;
     transition: transform 0.2s ease, filter 0.2s ease;
+    width: 64px;
+    height: 64px;
 }
 
 .prescription-btn:hover {

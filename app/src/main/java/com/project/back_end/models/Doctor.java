@@ -21,7 +21,7 @@ public class Doctor {
     @Size(min=3,max=100)
     private String name ;
 
-    @NotNull(message = "speciality cannot be null")
+    @NotNull(message = "specialty cannot be null")
     @Size(min=3,max=100)
     private String specialty ;
 
@@ -39,7 +39,7 @@ public class Doctor {
     private String phone ;
 
     // Each time slot is represented as a string (e.g., "09:00-10:00", "10:00-11:00").
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> availableTimes ;
 
     public Doctor(){}
@@ -60,12 +60,12 @@ public class Doctor {
         this.name = name;
     }
 
-    public String getSpeciality() {
+    public String getSpecialty() {
         return specialty;
     }
 
-    public void setSpeciality(String speciality) {
-        this.specialty = speciality;
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
     }
 
     public String getEmail() {

@@ -195,14 +195,14 @@ function renderHeader() {
 
     if (role === "patient") {
         headerContent += `
-      <a href="#" id="loginBtn">Login</a>
-      <a href="#" id="signupBtn">Sign Up</a>
+      <a href="#" id="openLoginBtn">Login</a>
+      <a href="#" id="openSignupBtn">Sign Up</a>
     `;
     }
 
     if (role === "loggedPatient") {
         headerContent += `
-      <a href="/pages/patientDashboard.html">Home</a>
+      <a href="/pages/loggedPatientDashboard.html">Home</a>
       <a href="/pages/patientAppointments.html">Appointments</a>
       <a href="#" id="logoutPatientBtn">Logout</a>
     `;
@@ -241,11 +241,13 @@ function attachHeaderButtonListeners() {
 
     const loginBtn = document.getElementById("loginBtn");
     if (loginBtn) {
+        console.log("patient login btn created") ;
         loginBtn.addEventListener("click", () => openModal("patientLogin"));
     }
 
     const signupBtn = document.getElementById("signupBtn");
     if (signupBtn) {
+        console.log("patient signup btn created") ;
         signupBtn.addEventListener("click", () => openModal("patientSignup"));
     }
 }

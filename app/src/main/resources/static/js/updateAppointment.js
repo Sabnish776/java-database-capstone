@@ -24,8 +24,9 @@ async function initializePage() {
 
   // get doctor to display only the available time of doctor
   getDoctors()
-    .then(doctors => {
+    .then(response => {
       // Find the doctor by the ID from the URL
+      const doctors = response.doctors
       const doctor = doctors.find(d => d.id == doctorId);
       if (!doctor) {
         alert("Doctor not found.");

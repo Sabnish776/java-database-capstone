@@ -29,8 +29,8 @@ public class DashboardController {
 //    - If invalid, redirects to the root URL, likely the login or home page.
     @GetMapping("/adminDashboard/{token}")
     public String adminDashboard(@PathVariable String token) {
-        Map map = service.validateToken(token,"admin") ;
-        if(map.isEmpty()){
+        Map<String , String> map = service.validateToken(token,"admin").getBody() ;
+        if(map != null ){
             return "admin/adminDashboard";
         }
         else{
@@ -46,8 +46,8 @@ public class DashboardController {
 //    - If the token is invalid, redirects to the root URL.
     @GetMapping("/doctorDashboard/{token}")
     public String doctorDashboard(@PathVariable String token) {
-        Map map = service.validateToken(token,"doctor") ;
-        if(map.isEmpty()){
+        Map<String, String> map = service.validateToken(token,"doctor").getBody() ;
+        if(map != null){
             return "doctor/doctorDashboard";
         }
         else{

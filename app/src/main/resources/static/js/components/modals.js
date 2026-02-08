@@ -2,6 +2,7 @@
 export function openModal(type) {
   let modalContent = '';
   if (type === 'addDoctor') {
+      console.log("Add doctor modal loaded") ;
     modalContent = `
          <h2>Add Doctor</h2>
          <input type="text" id="doctorName" placeholder="Doctor Name" class="input-field">

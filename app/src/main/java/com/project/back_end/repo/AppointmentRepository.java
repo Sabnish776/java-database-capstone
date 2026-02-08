@@ -103,4 +103,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
     @Query("UPDATE Appointment a SET a.status = :status WHERE a.id = :id")
     void updateStatus(int status , long id) ;
 
+    List<Appointment> findByDoctor_NameContainingIgnoreCaseAndPatient_Id(String doctorName, Long patientId);
+
 }

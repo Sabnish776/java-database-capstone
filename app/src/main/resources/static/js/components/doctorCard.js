@@ -41,7 +41,7 @@ Import the overlay function for booking appointments from loggedPatient.js
 */
 // doctorCard.js
 import { getPatientData } from "../services/patientServices.js";
-import {showBookingOverlay} from "../loggedPatient";
+import {showBookingOverlay} from "../loggedPatient.js";
 
 export function createDoctorCard(doctor) {
     // Main card container

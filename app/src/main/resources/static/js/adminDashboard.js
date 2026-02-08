@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
             openModal("addDoctor");
         });
     }
-
+    console.log("Admin Dashboard triggerred") ;
     // Load doctors
     loadDoctorCards();
 
@@ -103,10 +103,12 @@ document.addEventListener("DOMContentLoaded", () => {
    Load & Render Doctors
 ================================ */
 async function loadDoctorCards() {
+    console.log("loading doctor cards\n");
     const contentDiv = document.getElementById("content");
     contentDiv.innerHTML = "";
 
-    const doctors = await getDoctors();
+    const response = await getDoctors();
+    const doctors = response.doctors  ;
 
     if (!doctors || doctors.length === 0) {
         contentDiv.innerHTML = "<p>No doctors found</p>";
@@ -117,6 +119,7 @@ async function loadDoctorCards() {
 }
 
 function renderDoctorCards(doctors) {
+    console.log("rendering doctor cards\n") ;
     const contentDiv = document.getElementById("content");
     contentDiv.innerHTML = "";
 
@@ -130,9 +133,10 @@ function renderDoctorCards(doctors) {
    Search & Filter Logic
 ================================ */
 function bindFilters() {
+    console.log("binding filters\n") ;
     const searchBar = document.getElementById("searchBar");
-    const filterTime = document.getElementById("filterTime");
-    const filterSpecialty = document.getElementById("filterSpecialty");
+    const filterTime = document.getElementById("timeFilter");
+    const filterSpecialty = document.getElementById("specialtyFilter");
 
     if (searchBar) {
         searchBar.addEventListener("input", filterDoctorsOnChange);
@@ -146,9 +150,10 @@ function bindFilters() {
 }
 
 async function filterDoctorsOnChange() {
+
     const name = document.getElementById("searchBar")?.value || "";
-    const time = document.getElementById("filterTime")?.value || "";
-    const specialty = document.getElementById("filterSpecialty")?.value || "";
+    const time = document.getElementById("timeFilter")?.value || "";
+    const specialty = document.getElementById("specialtyFilter")?.value || "";
 
     const doctors = await filterDoctors(name, time, specialty);
 
@@ -176,7 +181,7 @@ window.adminAddDoctor = async function () {
     }
 
     const name = document.getElementById("doctorName").value;
-    const specialty = document.getElementById("specialization").value;
+    const specialty = document.getElementById("specialty").value;
     const email = document.getElementById("doctorEmail").value;
     const password = document.getElementById("doctorPassword").value;
     const phone = document.getElementById("doctorPhone").value;

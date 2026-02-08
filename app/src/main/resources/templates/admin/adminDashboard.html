@@ -161,7 +161,6 @@ with search, filter, and modal functionality.
                 <label for="specialtyFilter"></label>
                 <select id="specialtyFilter">
                     <option value="">Filter by Specialty</option>
-                    <option value="">Filter by Specialty</option>
                     <option value="Cardiologist">Cardiologist</option>
                     <option value="Dermatologist">Dermatologist</option>
                     <option value="Neurologist">Neurologist</option>
@@ -196,7 +195,8 @@ with search, filter, and modal functionality.
 </div>
 
 <!-- Admin dashboard logic -->
-<script type="module" th:src="@{/js/services/adminDashboard.js}" defer></script>
+<script type="module" th:src="@{/js/adminDashboard.js}" defer></script>
+<script type="module" th:src="@{/js/services/doctorServices.js}" defer></script>
 <script type="module" th:src="@{/js/components/doctorCard.js}" defer></script>
 </body>
 </html>
