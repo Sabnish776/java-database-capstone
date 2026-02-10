@@ -103,7 +103,7 @@ public class AppointmentService {
         LocalDateTime start = date.atStartOfDay();
         LocalDateTime end = date.atTime(23,59,59) ;
         List<Appointment> appointments = appointmentRepository.findByDoctor_IdAndAppointmentTimeBetween(doctorId,start,end);
-        if(pname != null || !pname.equalsIgnoreCase("null")){
+        if(pname != null){
             appointments = appointments.stream()
                     .filter(appointment -> appointment.getPatient().getName().toLowerCase().contains(pname.toLowerCase()))
                     .toList();

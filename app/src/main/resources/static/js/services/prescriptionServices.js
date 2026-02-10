@@ -37,7 +37,6 @@ export async function getPrescription(appointmentId, token) {
 
     const result = await response.json();
     console.log(result)
-    console.log(result)
     return result; // This should be your prescription object
   } catch (error) {
     console.error("Error :: getPrescription ::", error);

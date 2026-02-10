@@ -137,6 +137,7 @@ window.signupPatient = async function () {
       window.location.reload();
     }
     else alert(message);
+    console.log(data);
   } catch (error) {
     console.error("Signup failed:", error);
     alert("❌ An error occurred while signing up.");

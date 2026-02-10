@@ -42,6 +42,8 @@ Import the overlay function for booking appointments from loggedPatient.js
 // doctorCard.js
 import { getPatientData } from "../services/patientServices.js";
 import {showBookingOverlay} from "../loggedPatient.js";
+import { API_BASE_URL } from "../config/config.js";
+const DOCTOR_API = API_BASE_URL + "/doctor";
 
 export function createDoctorCard(doctor) {
     // Main card container
@@ -49,7 +51,7 @@ export function createDoctorCard(doctor) {
     card.classList.add("doctor-card");
     // Current user role
     const role = localStorage.getItem("userRole");
-
+    const token = localStorage.getItem("token");
     /* ===============================
        Doctor Info Section
     ================================ */
@@ -100,13 +102,15 @@ export function createDoctorCard(doctor) {
             const token = localStorage.getItem("token");
 
             try {
-                const response = await fetch(`/api/doctors/${doctor.id}`, {
+                const response = await fetch(`${DOCTOR_API}/${doctor.id}/${token}`, {
                     method: "DELETE",
                     headers: {
-                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json"
                     },
                 });
-
+                const data = await response.json()
+                console.log(response) ;
+                console.log(data) ;
                 if (!response.ok) {
                     throw new Error("Failed to delete doctor");
                 }

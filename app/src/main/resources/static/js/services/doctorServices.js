@@ -104,11 +104,10 @@ export async function deleteDoctor(id, token) {
  */
 export async function saveDoctor(doctor, token) {
     try {
-        const response = await fetch(DOCTOR_API, {
+        const response = await fetch(`${DOCTOR_API}/${token}`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(doctor)
         });
@@ -127,6 +126,9 @@ export async function saveDoctor(doctor, token) {
         };
     }
 }
+
+
+
 
 /**
  * Filter doctors by name, time, and specialty

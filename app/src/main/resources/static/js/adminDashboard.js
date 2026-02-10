@@ -199,7 +199,7 @@ window.adminAddDoctor = async function () {
         phone,
         availableTimes: availability
     };
-
+    console.log(doctor) ;
     try {
         const result = await saveDoctor(doctor, token);
 
@@ -208,7 +208,7 @@ window.adminAddDoctor = async function () {
             return;
         }
 
-        alert("Doctor added successfully");
+        alert("Doctor added successfullyyyy");
 
         // Close modal
         document.getElementById("modal").style.display = "none";

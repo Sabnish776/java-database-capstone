@@ -36,6 +36,7 @@ public class PrescriptionController {
     @PostMapping("/{token}")
     public ResponseEntity<Map<String , String>> savePrescription(@PathVariable String token, @RequestBody Prescription prescription){
         ResponseEntity<Map<String,String>> validated = service.validateToken(token,"doctor") ;
+        System.out.println(prescription);
         if(validated.getStatusCode() !=  HttpStatus.OK){
             return new ResponseEntity<>(Map.of("message","Unauthorized"),HttpStatus.UNAUTHORIZED);
         }

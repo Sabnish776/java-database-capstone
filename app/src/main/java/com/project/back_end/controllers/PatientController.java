@@ -2,7 +2,6 @@ package com.project.back_end.controllers;
 
 import com.project.back_end.DTO.Login;
 import com.project.back_end.models.Patient;
-import com.project.back_end.repo.PatientRepository;
 import com.project.back_end.services.PatientService;
 import com.project.back_end.services.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,15 +40,16 @@ public class PatientController {
 //    - If validation passes, attempts to create the patient and returns success or error messages based on the outcome.
     @PostMapping
     public ResponseEntity<Map<String,String>> createPatient(@RequestBody Patient patient){
-        boolean existing = service.validatePatient(patient) ;
-        if(!existing){
-            return new ResponseEntity<>(Map.of("conflict","Patient already exists"), HttpStatus.CONFLICT);
+        boolean doesntExist = service.validatePatient(patient) ;
+        System.out.println(patient);
+        if(!doesntExist){
+            return new ResponseEntity<>(Map.of("message","Patient already exists"), HttpStatus.CONFLICT);
         }
         int status = patientService.createPatient(patient);
         if(status == 0){
-            return new ResponseEntity<>(Map.of("Internal error","Internal Error occurred"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(Map.of("message","Internal Error occurred"), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(Map.of("success","signup successful"), HttpStatus.CREATED);
+        return new ResponseEntity<>(Map.of("message","signup successful"), HttpStatus.CREATED);
     }
 
 // 5. Define the `login` Method:

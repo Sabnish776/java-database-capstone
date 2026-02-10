@@ -1,10 +1,13 @@
 package com.project.back_end.services;
 
+import com.project.back_end.models.Appointment;
 import com.project.back_end.models.Prescription;
+import com.project.back_end.repo.AppointmentRepository;
 import com.project.back_end.repo.PrescriptionRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,16 +20,16 @@ public class PrescriptionService {
 //    - It is injected through the constructor, ensuring proper dependency management and enabling testing.
 //    - Instruction: Constructor injection is a good practice, ensuring that all necessary dependencies are available at the time of service initialization.
     private final PrescriptionRepository prescriptionRepository;
-
     public PrescriptionService(PrescriptionRepository prescriptionRepository) {
         this.prescriptionRepository = prescriptionRepository;
     }
-
+    @Transactional
     public ResponseEntity<Map<String, String>> savePrescription(Prescription prescription) {
 
         Map<String, String> response = new HashMap<>();
 
         try {
+
             prescriptionRepository.save(prescription);
             response.put("message", "Prescription saved");
             return new ResponseEntity<>(response, HttpStatus.CREATED);

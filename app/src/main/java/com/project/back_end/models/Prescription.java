@@ -29,11 +29,9 @@ public class Prescription {
     @Size(max = 200 )
     private String doctorNotes ;
 
-    public Prescription() {
-    }
-
-    public Prescription(String id, Long appointmentId, String medication, String dosage, String doctorNotes) {
+    public Prescription(String id, String patientName, Long appointmentId, String medication, String dosage, String doctorNotes) {
         this.id = id;
+        this.patientName = patientName;
         this.appointmentId = appointmentId;
         this.medication = medication;
         this.dosage = dosage;
@@ -46,6 +44,14 @@ public class Prescription {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
     }
 
     public Long getAppointmentId() {
@@ -78,5 +84,17 @@ public class Prescription {
 
     public void setDoctorNotes(String doctorNotes) {
         this.doctorNotes = doctorNotes;
+    }
+
+    @Override
+    public String toString() {
+        return "Prescription{" +
+                "id='" + id + '\'' +
+                ", patientName='" + patientName + '\'' +
+                ", appointmentId=" + appointmentId +
+                ", medication='" + medication + '\'' +
+                ", dosage='" + dosage + '\'' +
+                ", doctorNotes='" + doctorNotes + '\'' +
+                '}';
     }
 }

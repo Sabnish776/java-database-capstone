@@ -54,19 +54,19 @@ public class DoctorController {
 //    - Validates the token for the `"admin"` role before proceeding.
 //    - If the doctor already exists, returns a conflict response; otherwise, adds the doctor and returns a success message.
     @PostMapping("/{token}")
-    public ResponseEntity<Map<String,String>> saveDoctor(Doctor doctor, @PathVariable String token){
+    public ResponseEntity<Map<String,String>> saveDoctor(@RequestBody Doctor doctor, @PathVariable String token){
         ResponseEntity<Map<String, String>> validated = service.validateToken(token, "admin");
         if(validated.getStatusCode() != HttpStatus.OK){
             return new ResponseEntity<>(Map.of("message","Unauthorized access") , HttpStatus.UNAUTHORIZED);
         }
         int status = doctorService.saveDoctor(doctor);
         if(status == -1){
-            return new ResponseEntity<>(Map.of("conflict","Doctor already exists") , HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(Map.of("message","Doctor already exists") , HttpStatus.BAD_REQUEST);
         }
         if(status == 0){
-            return new ResponseEntity<>(Map.of("success","Internal error occurred") , HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(Map.of("message","Internal error occurred") , HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(Map.of("success","Successfully Added doctor") , HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("message","Successfully Added doctor") , HttpStatus.OK);
     }
 
 
@@ -106,7 +106,7 @@ public class DoctorController {
 //    - If the doctor exists, deletes the record and returns a success message; otherwise, responds with a not found or error message.
     @DeleteMapping("/{id}/{token}")
     public ResponseEntity<Map<String , String>> deleteDoctor(
-            @RequestBody Doctor doctor, @PathVariable Long id ,@PathVariable String token){
+            @PathVariable Long id ,@PathVariable String token){
         ResponseEntity<Map<String ,String>> validated = service.validateToken(token, "admin");
         if(validated.getStatusCode() != HttpStatus.OK){
             return new ResponseEntity<>(Map.of("message","Unauthorized access") , HttpStatus.UNAUTHORIZED);

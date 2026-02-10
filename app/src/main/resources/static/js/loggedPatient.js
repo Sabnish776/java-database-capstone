@@ -72,8 +72,14 @@ export function showBookingOverlay(e, doctor, patient) {
     const token = localStorage.getItem("token");
     const startTime = time.split('-')[0];
     const appointment = {
-      doctor: { id: doctor.id },
-      patient: { id: patient.id },
+      doctor: { id: doctor.id  , name: doctor.name , specialty: doctor.specialty , email: doctor.email , phone : doctor.phone},
+      patient: {
+          id: patient.id ,
+          name: patient.name,
+          email: patient.email,
+          phone:patient.phone ,
+          address:patient.address
+                },
       appointmentTime: `${date}T${startTime}:00`,
       status: 0
     };

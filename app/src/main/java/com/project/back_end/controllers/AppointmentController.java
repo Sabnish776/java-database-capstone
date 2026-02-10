@@ -37,7 +37,11 @@ public class AppointmentController {
         if(validation.getStatusCode() != HttpStatus.OK){
             return new ResponseEntity<>(Map.of("message","Unauthorized access") , HttpStatus.UNAUTHORIZED);
         }
+        if ("all".equalsIgnoreCase(patientName)) {
+            patientName = null;
+        }
         Map<String , Object> appointments =  appointmentService.getAppointments(patientName,date,token) ;
+        System.out.println(appointments.get("appointments"));
         return ResponseEntity.ok(appointments);
     }
 // 4. Define the `bookAppointment` Method:
@@ -46,8 +50,12 @@ public class AppointmentController {
 //    - Validates the token for the `"patient"` role.
 //    - Uses service logic to validate the appointment data (e.g., check for doctor availability and time conflicts).
 //    - Returns success if booked, or appropriate error messages if the doctor ID is invalid or the slot is already taken.
-    @PostMapping("/{token}")
-    public ResponseEntity<Map<String,String>> bookAppointment(@PathVariable String token , @RequestBody Appointment appointment){
+    @PostMapping("/{token}/{doctorId}/{PatientId}")
+    public ResponseEntity<Map<String,String>> bookAppointment(
+            @PathVariable String token ,@PathVariable Long doctorId,@PathVariable Long PatientId, @RequestBody Appointment appointment){
+        appointment.getDoctor().setId(doctorId);
+        appointment.getPatient().setId(PatientId);
+        System.out.println(appointment);
         ResponseEntity<Map<String,String>> validation = service.validateToken(token,"patient");
         if(validation.getStatusCode() != HttpStatus.OK){
             return new ResponseEntity<>(Map.of("message","Unauthorized access") , HttpStatus.UNAUTHORIZED);

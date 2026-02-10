@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       // Now, check if the prescription exists in the response and access it from the array
       if (response.prescription && response.prescription.length > 0) {
-        const existingPrescription = response.prescription[0]; // Access first prescription object
+        const existingPrescription = response.prescription[response.prescription.length -1]; // Access first prescription object
         patientNameInput.value = existingPrescription.patientName || YOU;
         medicinesInput.value = existingPrescription.medication || "";
         dosageInput.value = existingPrescription.dosage || "";
@@ -67,11 +67,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       doctorNotes: notesInput.value,
       appointmentId
     };
-
+    console.log(prescription) ;
     const { success, message } = await savePrescription(prescription, token);
 
     if (success) {
-      alert("✅ Prescription saved successfully.");
+      alert(message);
       selectRole('doctor');
     } else {
       alert("❌ Failed to save prescription. " + message);

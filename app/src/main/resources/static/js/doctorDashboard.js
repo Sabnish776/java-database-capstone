@@ -113,7 +113,7 @@ async function loadAppointments() {
 
         const appointments = await getAllAppointments(
             selectedDate,
-            patientName ?? "null",
+            patientName ?? "all",
             token
         );
 
